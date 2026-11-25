@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wystawa Fotograficzna</title>
+  <style>
+    body { margin: 0; background: #121212; color: #fff; font-family: system-ui, -apple-system, sans-serif; text-align: center; }
+    .hint { padding: 12px; font-size: 0.9rem; color: #aaa; margin: 0; }
+    .container { position: relative; max-width: 1200px; margin: 0 auto; }
+    .container img { width: 100%; height: auto; display: block; }
+    .container svg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+    
+    /* Delikatne obramowanie pokazujące odwiedzającym, że w zdjęcia można klikać */
+    .hotspot { fill: rgba(255, 255, 255, 0.02); stroke: rgba(255, 255, 255, 0.45); stroke-width: 4; cursor: pointer; transition: 0.2s; }
+    .hotspot:hover, .hotspot:active { fill: rgba(255, 255, 255, 0.2); stroke: #fff; }
+
+    /* Pełny ekran po kliknięciu */
+    #modal { display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.94); z-index: 100; flex-direction: column; justify-content: center; align-items: center; padding: 20px; box-sizing: border-box; }
+    #modal img { max-width: 95%; max-height: 75vh; object-fit: contain; border-radius: 4px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); }
+    #modal h2 { margin: 16px 0 6px; font-size: 1.4rem; }
+    #modal p { margin: 0; color: #bbb; font-size: 1rem; }
+    #close { position: absolute; top: 15px; right: 25px; font-size: 2.5rem; line-height: 1; cursor: pointer; color: #fff; }
+  </style>
+</head>
+<body>
+
+  <p class="hint">Dotknij wybraną pracę na ścianie, aby ją powiększyć</p>
+
+  <div class="container">
+    <img src="sciana.jpg" alt="Wystawa fotograficzna">
+    
+    <!-- Współrzędne dopasowane do Twojego zdjęcia (10 prac) -->
+    <svg viewBox="0 0 1000 750">
+      <!-- GÓRNY RZĄD -->
+      <!-- 1. Duża pionowa praca z zorzą (góra, środek-lewo) -->
+      <rect class="hotspot" x="410" y="140" width="70" height="96" 
+            onclick="otworz('Tytuł pracy 1', 'Imię i Nazwisko 1', 'praca1.jpg')" />
+            
+      <!-- 2. Duża pionowa praca z lasem (góra, prawo) -->
+      <rect class="hotspot" x="735" y="135" width="70" height="96" 
+            onclick="otworz('Tytuł pracy 2', 'Imię i Nazwisko 2', 'praca2.jpg')" />
+
+      <!-- DOLNY RZĄD (od lewej do prawej) -->
+      <!-- 3. Małe poziome zdjęcie po lewej -->
+      <rect class="hotspot" x="163" y="291" width="42" height="31" 
+            onclick="otworz('Tytuł pracy 3', 'Imię i Nazwisko 3', 'praca3.jpg')" />
+            
+      <!-- 4a. Górne zdjęcie na dużym arkuszu -->
+      <rect class="hotspot" x="242" y="297" width="77" height="55" 
+            onclick="otworz('Tytuł pracy 4a', 'Imię i Nazwisko 4a', 'praca4a.jpg')" />
+
+      <!-- 4b. Dolne zdjęcie na dużym arkuszu (żuraw) -->
+      <rect class="hotspot" x="242" y="361" width="77" height="55" 
+            onclick="otworz('Tytuł pracy 4b', 'Imię i Nazwisko 4b', 'praca4b.jpg')" />
+            
+      <!-- 5. Małe poziome zdjęcie (zorza) -->
+      <rect class="hotspot" x="354" y="290" width="42" height="30" 
+            onclick="otworz('Tytuł pracy 5', 'Imię i Nazwisko 5', 'praca5.jpg')" />
+            
+      <!-- 6. Małe poziome zdjęcie (miasto nocą) -->
+      <rect class="hotspot" x="433" y="289" width="42" height="31" 
+            onclick="otworz('Tytuł pracy 6', 'Imię i Nazwisko 6', 'praca6.jpg')" />
+            
+      <!-- 7. Małe poziome zdjęcie (za pierwszym oknem) -->
+      <rect class="hotspot" x="562" y="289" width="41" height="30" 
+            onclick="otworz('Tytuł pracy 7', 'Imię i Nazwisko 7', 'praca7.jpg')" />
+            
+      <!-- 8. Małe poziome zdjęcie (przed drugim oknem) -->
+      <rect class="hotspot" x="642" y="287" width="41" height="30" 
+            onclick="otworz('Tytuł pracy 8', 'Imię i Nazwisko 8', 'praca8.jpg')" />
+            
+      <!-- 9. Małe poziome zdjęcie (za drugim oknem) -->
+      <rect class="hotspot" x="774" y="282" width="41" height="30" 
+            onclick="otworz('Tytuł pracy 9', 'Imię i Nazwisko 9', 'praca9.jpg')" />
+    </svg>
+  </div>
+
+  <!-- Okno powiększenia -->
+  <div id="modal" onclick="zamknij()">
+    <span id="close">&times;</span>
+    <img id="modal-img" src="" alt="">
+    <h2 id="modal-title"></h2>
+    <p id="modal-author"></p>
+  </div>
+
+  <script>
+    function otworz(tytul, autor, zdjecieUrl) {
+      document.getElementById('modal-title').innerText = tytul;
+      document.getElementById('modal-author').innerText = "Autor: " + autor;
+      document.getElementById('modal-img').src = zdjecieUrl;
+      document.getElementById('modal').style.display = 'flex';
+    }
+    function zamknij() {
+      document.getElementById('modal').style.display = 'none';
+    }
+  </script>
+</body>
+</html>
